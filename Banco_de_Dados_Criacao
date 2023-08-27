@@ -1,0 +1,33 @@
+CREATE TABLE usuario (
+	id serial PRIMARY KEY NOT NULL,
+	nome VARCHAR(100) NOT NULL,
+	email VARCHAR(100) NOT NULL,
+	senha VARCHAR(255) NOT NULL,
+	telefone VARCHAR(11) NOT NULL
+);
+
+ALTER TABLE usuario ADD id_endereco INT;
+ALTER TABLE usuario ADD CONSTRAINT fk_endereco FOREIGN KEY (id_endereco) REFERENCES endereco(id);
+
+CREATE TABLE contato (
+	id serial PRIMARY KEY NOT NULL,
+	nome VARCHAR(100) NOT NULL,
+	email VARCHAR(100) NOT NULL,
+	telefone VARCHAR(11) NOT NULL,
+	id_usuario INT REFERENCES usuario(id) NOT NULL
+);
+
+ALTER TABLE contato ADD id_endereco INT;
+ALTER TABLE contato ADD CONSTRAINT fk_endereco FOREIGN KEY (id_endereco) REFERENCES endereco(id);
+
+CREATE TABLE endereco (
+	id serial PRIMARY KEY NOT NULL,
+	cep VARCHAR(8) NOT NULL,
+	logradouro VARCHAR(30) NOT NULL,
+	bairro VARCHAR(30) NOT NULL,
+	localidade VARCHAR(30) NOT NULL,
+	uf VARCHAR(2) NOT NULL,
+	numero VARCHAR(10) NOT NULL,
+);
+
+select * from usuario;
