@@ -3,6 +3,7 @@ package com.funtec.MeusContatosAPI.Resources;
 import com.funtec.MeusContatosAPI.Exceptions.ErroAutenticacao;
 import com.funtec.MeusContatosAPI.Exceptions.RegraNegocioException;
 import com.funtec.MeusContatosAPI.Models.Usuario;
+import com.funtec.MeusContatosAPI.Resources.DTO.AtualizarUsuarioDTO;
 import com.funtec.MeusContatosAPI.Resources.DTO.TokenDTO;
 import com.funtec.MeusContatosAPI.Resources.DTO.UsuarioAuthDTO;
 import com.funtec.MeusContatosAPI.Resources.DTO.UsuarioDTO;
@@ -12,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("usuario")
@@ -58,5 +59,48 @@ public class UsuarioResource {
         } catch (ErroAutenticacao e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable("id") Long id) {
+
+        Optional<Usuario> usuario = service.findById(id);
+
+        if (!usuario.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return ResponseEntity.ok(usuario);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> findAll() {
+        List<Usuario> listaDeUsuarios = service.findAll();
+        return ResponseEntity.ok(listaDeUsuarios);
+    }
+
+    @PutMapping("/{id}/atualizar-usuario")
+    public ResponseEntity<?> atualizarUsuario(@PathVariable("id") Long id, @RequestBody AtualizarUsuarioDTO atualizarUsuarioDTO) {
+        try {
+            Usuario usuario = converterDTO(atualizarUsuarioDTO);
+
+            usuario = service.atualizarUsuario(id, usuario);
+            return ResponseEntity.ok(usuario);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body("Erro ao tentar atualizar usuario: " + e.getMessage());
+        }
+
+    }
+
+    private Usuario converterDTO(AtualizarUsuarioDTO atualizarUsuarioDTO) {
+        Usuario usuario = new Usuario();
+
+        usuario.setId(atualizarUsuarioDTO.getId());
+        usuario.setNome(atualizarUsuarioDTO.getNome());
+        usuario.setEmail(atualizarUsuarioDTO.getEmail());
+        usuario.setTelefone(atualizarUsuarioDTO.getTelefone());
+        usuario.setEndereco(atualizarUsuarioDTO.getEndereco());
+
+        return usuario;
     }
 }
