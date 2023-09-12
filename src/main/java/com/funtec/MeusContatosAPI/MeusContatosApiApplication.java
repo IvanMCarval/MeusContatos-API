@@ -2,9 +2,18 @@ package com.funtec.MeusContatosAPI;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-public class MeusContatosApiApplication {
+@EnableWebMvc
+public class MeusContatosApiApplication implements WebMvcConfigurer {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
+    }
 
 	public static void main(String[] args) {
 		SpringApplication.run(MeusContatosApiApplication.class, args);
