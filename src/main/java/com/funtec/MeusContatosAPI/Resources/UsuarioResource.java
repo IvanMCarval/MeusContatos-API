@@ -70,7 +70,9 @@ public class UsuarioResource {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return ResponseEntity.ok(usuario);
+        AtualizarUsuarioDTO usuarioDTO = converterParaDTO(usuario);
+
+        return ResponseEntity.ok(usuarioDTO);
     }
 
     @GetMapping
@@ -102,5 +104,17 @@ public class UsuarioResource {
         usuario.setEndereco(atualizarUsuarioDTO.getEndereco());
 
         return usuario;
+    }
+
+    private AtualizarUsuarioDTO converterParaDTO(Optional<Usuario> usuario) {
+        AtualizarUsuarioDTO atualizarUsuarioDTO = new AtualizarUsuarioDTO();
+
+        atualizarUsuarioDTO.setId(usuario.get().getId());
+        atualizarUsuarioDTO.setNome(usuario.get().getNome());
+        atualizarUsuarioDTO.setEmail(usuario.get().getEmail());
+        atualizarUsuarioDTO.setTelefone(usuario.get().getTelefone());
+        atualizarUsuarioDTO.setEndereco(usuario.get().getEndereco());
+
+        return atualizarUsuarioDTO;
     }
 }
