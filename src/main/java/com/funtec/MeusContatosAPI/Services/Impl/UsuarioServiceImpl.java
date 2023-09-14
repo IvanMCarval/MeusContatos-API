@@ -2,9 +2,9 @@ package com.funtec.MeusContatosAPI.Services.Impl;
 
 import com.funtec.MeusContatosAPI.Exceptions.ErroAutenticacao;
 import com.funtec.MeusContatosAPI.Exceptions.RegraNegocioException;
+import com.funtec.MeusContatosAPI.Models.Endereco;
 import com.funtec.MeusContatosAPI.Models.Usuario;
 import com.funtec.MeusContatosAPI.Repository.UsuarioRepository;
-import com.funtec.MeusContatosAPI.Resources.DTO.AtualizarUsuarioDTO;
 import com.funtec.MeusContatosAPI.Services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -86,6 +86,13 @@ public class UsuarioServiceImpl implements UsuarioService {
         entity.setNome(obj.getNome());
         entity.setEmail(obj.getEmail());
         entity.setTelefone(obj.getTelefone());
-        entity.setEndereco(obj.getEndereco());
+
+        Endereco endereco = entity.getEndereco();
+        endereco.setCep(obj.getEndereco().getCep());
+        endereco.setLogradouro(obj.getEndereco().getLogradouro());
+        endereco.setBairro(obj.getEndereco().getBairro());
+        endereco.setNumero(obj.getEndereco().getNumero());
+        endereco.setLocalidade(obj.getEndereco().getLocalidade());
+        endereco.setUf(obj.getEndereco().getUf());
     }
 }
