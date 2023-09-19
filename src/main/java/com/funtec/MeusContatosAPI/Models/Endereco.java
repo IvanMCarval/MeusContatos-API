@@ -39,4 +39,7 @@ public class Endereco {
 
     @OneToOne(mappedBy = "endereco")
     private Usuario usuario;
+
+    @OneToOne(mappedBy = "endereco")
+    private Contato contato;
 }
