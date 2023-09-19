@@ -6,11 +6,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Builder
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-public class ContatoDTO {
+@AllArgsConstructor
+public class AtualizarContatoDTO {
     private Long id;
 
     private String nome;
@@ -19,7 +19,7 @@ public class ContatoDTO {
 
     private String telefone;
 
-    private Endereco endereco;
+    private EnderecoDTO endereco;
 
     private Long id_usuario;
 }
