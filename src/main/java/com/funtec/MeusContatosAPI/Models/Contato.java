@@ -32,5 +32,6 @@ public class Contato {
     @JoinColumn(name = "id_endereco")
     private Endereco endereco;
 
-    private Long id_usuario;
+    @Column(name = "usuarioid")
+    private Long usuarioId;
 }

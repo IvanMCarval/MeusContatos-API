@@ -21,5 +21,5 @@ public class AtualizarContatoDTO {
 
     private EnderecoDTO endereco;
 
-    private Long id_usuario;
+    private Long usuarioId;
 }

@@ -21,6 +21,11 @@ public class ContatoServiceImpl implements ContatoService {
     }
 
     @Override
+    public List<Contato> findByUsuarioId(Long id) {
+        return repository.findByUsuarioId(id);
+    }
+
+    @Override
     public Optional<Contato> findById(Long id) {
         return repository.findById(id);
     }

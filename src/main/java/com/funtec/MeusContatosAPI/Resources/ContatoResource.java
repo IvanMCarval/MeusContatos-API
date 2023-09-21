@@ -30,7 +30,7 @@ public class ContatoResource {
                 .email(contatoDTO.getEmail())
                 .telefone(contatoDTO.getTelefone())
                 .endereco(contatoDTO.getEndereco())
-                .id_usuario(contatoDTO.getId_usuario())
+                .usuarioId(contatoDTO.getUsuarioId())
                 .build();
 
         try {
@@ -45,6 +45,13 @@ public class ContatoResource {
     public ResponseEntity<?> findAll(){
         List<Contato> listaDeContato = service.findAll();
         List<AtualizarContatoDTO> contatoDTOList = converterContatoParaDTO(listaDeContato);
+        return ResponseEntity.ok(contatoDTOList);
+    }
+
+    @GetMapping("/{id}/contatos")
+    public ResponseEntity<?> findByUsuarioId(@PathVariable("id") Long id){
+        List<Contato> contatoList = service.findByUsuarioId(id);
+        List<AtualizarContatoDTO> contatoDTOList = converterContatoParaDTO(contatoList);
         return ResponseEntity.ok(contatoDTOList);
     }
 
@@ -88,7 +95,7 @@ public class ContatoResource {
 
     private static Contato converterDTOParaContato(AtualizarContatoDTO atualizarContatoDTO) {
         Contato contato = new Contato();
-        contato.setId_usuario(atualizarContatoDTO.getId_usuario());
+        contato.setUsuarioId(atualizarContatoDTO.getUsuarioId());
         contato.setId(atualizarContatoDTO.getId());
         contato.setNome(atualizarContatoDTO.getNome());
         contato.setEmail(atualizarContatoDTO.getEmail());
@@ -110,7 +117,7 @@ public class ContatoResource {
 
     private static AtualizarContatoDTO converterContatoParaDTO(Contato contato) {
         AtualizarContatoDTO contatoDTO = new AtualizarContatoDTO();
-        contatoDTO.setId_usuario(contatoDTO.getId_usuario());
+        contatoDTO.setUsuarioId(contatoDTO.getUsuarioId());
         contatoDTO.setId(contato.getId());
         contatoDTO.setNome(contato.getNome());
         contatoDTO.setEmail(contato.getEmail());
@@ -132,7 +139,7 @@ public class ContatoResource {
 
     private static AtualizarContatoDTO converterContatoParaDTO(Optional<Contato> contato) {
         AtualizarContatoDTO contatoDTO = new AtualizarContatoDTO();
-        contatoDTO.setId_usuario(contato.get().getId_usuario());
+        contatoDTO.setUsuarioId(contato.get().getUsuarioId());
         contatoDTO.setId(contato.get().getId());
         contatoDTO.setNome(contato.get().getNome());
         contatoDTO.setEmail(contato.get().getEmail());
@@ -157,7 +164,7 @@ public class ContatoResource {
 
         for (Contato contato : contatos) {
             AtualizarContatoDTO contatoDTO = new AtualizarContatoDTO();
-            contatoDTO.setId_usuario(contato.getId_usuario());
+            contatoDTO.setUsuarioId(contato.getUsuarioId());
             contatoDTO.setId(contato.getId());
             contatoDTO.setNome(contato.getNome());
             contatoDTO.setEmail(contato.getEmail());

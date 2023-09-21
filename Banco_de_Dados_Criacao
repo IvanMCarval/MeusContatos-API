@@ -14,7 +14,7 @@ CREATE TABLE contato (
 	nome VARCHAR(100) NOT NULL,
 	email VARCHAR(100) NOT NULL,
 	telefone VARCHAR(11) NOT NULL,
-	id_usuario INT REFERENCES usuario(id) NOT NULL
+	usuarioid INT REFERENCES usuario(id) NOT NULL
 );
 
 ALTER TABLE contato ADD id_endereco INT;
