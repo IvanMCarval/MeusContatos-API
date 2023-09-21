@@ -21,5 +21,5 @@ public class ContatoDTO {
 
     private Endereco endereco;
 
-    private Long id_usuario;
+    private Long usuarioId;
 }
