@@ -86,7 +86,7 @@ public class ContatoResource {
     public ResponseEntity<?> deletarContato(@PathVariable("id") Long id){
         try {
             service.deletarContato(id);
-            return ResponseEntity.ok("Deletado com sucesso");
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (RegraNegocioException e){
             return new ResponseEntity<>("Erro ao tentar deletar", HttpStatus.BAD_REQUEST);
         }
