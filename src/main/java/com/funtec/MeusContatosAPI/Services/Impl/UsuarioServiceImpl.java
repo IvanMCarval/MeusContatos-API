@@ -60,10 +60,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     public Usuario autenticar(String email, String senha) {
         Usuario usuario = repository.findByEmail(email);
 
+        if (usuario == null) {
+            throw new ErroAutenticacao("Email não cadastrado na base de dados!");
+        }
+
         boolean senhaAutenticada = passwordEncoder.matches(senha, usuario.getSenha());
 
         if (!senhaAutenticada) {
-            throw new ErroAutenticacao("Erro na autenticação");
+            throw new ErroAutenticacao("Email ou senha incorretos.");
         }
 
         return usuario;
