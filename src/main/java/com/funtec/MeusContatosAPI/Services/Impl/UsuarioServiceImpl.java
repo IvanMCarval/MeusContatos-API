@@ -76,14 +76,10 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional
     public Usuario atualizarUsuario(Long id, Usuario usuario) {
-        try {
-            Usuario entity = repository.getReferenceById(id);
-            atualizaUsuario(entity, usuario);
-            return repository.save(entity);
-        } catch (RegraNegocioException e) {
-            throw new RegraNegocioException("Usuario não encontrado: " + e.getMessage());
-        }
-
+        Usuario entity = repository.getReferenceById(id);
+        verificarEmailExistente(usuario.getEmail());
+        atualizaUsuario(entity, usuario);
+        return repository.save(entity);
     }
 
     private void atualizaUsuario(Usuario entity, Usuario obj) {
