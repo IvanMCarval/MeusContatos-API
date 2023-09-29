@@ -13,4 +13,5 @@ public interface UsuarioService {
     Usuario autenticar(String email, String senha);
     Usuario atualizarUsuario(Long id, Usuario usuario);
     void verificarEmailExistente(String email);
+    void verificarUsuarioEmailExistente(String email, Long id);
 }

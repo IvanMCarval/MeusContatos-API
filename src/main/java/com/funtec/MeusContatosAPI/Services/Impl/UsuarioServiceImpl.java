@@ -57,6 +57,18 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    public void verificarUsuarioEmailExistente(String email, Long id) {
+        Usuario usuarioExsite = repository.findByEmail(email);
+        boolean emailExiste = repository.existsByEmail(email);
+
+        if (emailExiste) {
+            if (!usuarioExsite.getId().equals(id)){
+                throw new RegraNegocioException("Este email ja está cadastrado em nosso sistema");
+            }
+        }
+    }
+
+    @Override
     public Usuario autenticar(String email, String senha) {
         Usuario usuario = repository.findByEmail(email);
 
@@ -77,7 +89,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Transactional
     public Usuario atualizarUsuario(Long id, Usuario usuario) {
         Usuario entity = repository.getReferenceById(id);
-        verificarEmailExistente(usuario.getEmail());
+        verificarUsuarioEmailExistente(usuario.getEmail(), id);
         atualizaUsuario(entity, usuario);
         return repository.save(entity);
     }
